@@ -8,29 +8,24 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITextViewDelegate {
 
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
+  
+    @IBOutlet weak var detailDescriptionLabel: UITextView!
 
 
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = self.detailItem {
-            if let label = self.detailDescriptionLabel {
-                label.text = detail.description
+      
+        if let label = self.detailDescriptionLabel {
+                label.text = objects[currentIndex]
             }
         }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     var detailItem: NSDate? {
@@ -40,6 +35,15 @@ class DetailViewController: UIViewController {
         }
     }
 
-
+    override func viewWillDisappear(_ animated: Bool) {
+        print(objects)
+    }
+    
+///   UITextViewDelegate
+    func textViewDidChange(_ textView: UITextView) {
+        objects[currentIndex] = detailDescriptionLabel.text
+    }
+    
+    
 }
 
